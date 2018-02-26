@@ -1,0 +1,9 @@
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\bin\Release\netstandard2.0\DvSharpSdk.deps.json
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\bin\Release\netstandard2.0\DvSharpSdk.dll
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\bin\Release\netstandard2.0\DvSharpSdk.pdb
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\obj\Release\netstandard2.0\DvSharpSdk.csprojResolveAssemblyReference.cache
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\obj\Release\netstandard2.0\DvSharpSdk.csproj.CoreCompileInputs.cache
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\obj\Release\netstandard2.0\DvSharpSdk.AssemblyInfoInputs.cache
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\obj\Release\netstandard2.0\DvSharpSdk.AssemblyInfo.cs
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\obj\Release\netstandard2.0\DvSharpSdk.dll
+C:\Users\kay\source\repos\DvSharpSdk\DvSharpSdk\obj\Release\netstandard2.0\DvSharpSdk.pdb

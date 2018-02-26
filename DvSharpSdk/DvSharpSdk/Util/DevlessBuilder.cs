@@ -55,6 +55,14 @@ namespace DvSharpSdk.Util
 
             return booll;
         }
+        public static int checkStatusCode(String response)
+        {
+            var addResponse = JsonConvert.DeserializeObject(response);
+            JObject obj = JObject.Parse(addResponse.ToString());
+            string statuscode = obj["status_code"].ToString();
+            int statusCode = Int32.Parse(statuscode);
+            return statusCode;
+        }
 
         public static Boolean checkGetSuccess(String response)
         {
@@ -101,12 +109,12 @@ namespace DvSharpSdk.Util
 
         }
 
-        public static void GetResults(String payload)
+        public static JArray GetResults(String payload)
         {
 
             JObject obj = JObject.Parse(payload);
             JArray rect = (JArray)obj["results"];
-             
+            return rect;
 
         }
 

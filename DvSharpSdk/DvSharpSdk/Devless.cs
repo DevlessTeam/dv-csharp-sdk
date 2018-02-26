@@ -1,4 +1,5 @@
 ﻿using DvSharpSdk.Util;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -20,61 +21,42 @@ namespace DvSharpSdk
         }
 
         //public String getData(String serviceName, String tableName, IGetDataResponse getDataResponse)
-        public void getData(String serviceName, String tableName)
+        public JArray getData(String serviceName, String tableName)
         {
             string onioin = "/db?table="; string tablename = tableName;
             string GetRequestUrl = serviceName + onioin + tableName;
 
             //using RESTSHARP
+            JArray results = new JArray();
 
             var client = new RestClient(new DevlessBuilder().getUrl(rootUrl, serviceName, tableName));
             var request = new RestRequest(Method.GET);
             //request.AddHeader("cache-control", "no-cache");
             request.AddHeader("devless-token", tokenValue);
-            //IRestResponse response = client.Execute(request);
-            var asynHandler = client.ExecuteAsync(request, requestResponse =>
+            IRestResponse requestResponse = client.Execute(request);
+
+            Boolean booll = DevlessBuilder.checkAuth(requestResponse.Content);
+            if (booll)
+            { 
+                //var Payload = DevLessBuilder.GetPayload(requestResponse.Content);
+                results = DevlessBuilder.GetResults(DevlessBuilder.GetPayload(requestResponse.Content));
+                 
+            }
+            else
             {
+                string errorMessage = "Error: The ServiceName or TableName doesn't exist";
+                Console.WriteLine(errorMessage);
+            }
 
-                try
-                {
-                    Boolean booll = DevlessBuilder.checkAuth(requestResponse.Content);
-                    //Console.WriteLine(booll);
-                    if (booll)
-                    {
-                        Boolean successful = DevlessBuilder.checkGetSuccess(requestResponse.Content);
-                        if (successful)
-                        {
-                            //var Payload = DevLessBuilder.GetPayload(requestResponse.Content);
-                            DevlessBuilder.GetResults(DevlessBuilder.GetPayload(requestResponse.Content));
-
-                        }
-                        else
-                        {
-                            string errorMessage = "Error: The ServiceName or TableName doesn't exist";
-                            Console.WriteLine(errorMessage);
-                        }
-                    }
-
-                    else
-                    {
-                        //requestResponse.userNotAuthenticated(new ErrorMessage("Token expired please log in again"));
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-
-            });
-            //var output = response.Content;
-            // return response.Content;
+            return results;
 
 
         }
 
-        public void postData(String serviceName, String tableName, IDictionary<String, Object> datatoAdd)
+        public int postData(String serviceName, String tableName, IDictionary<String, Object> datatoAdd)
         {
             //using RESTSHARP
+
             var client = new RestClient(new DevlessBuilder().postUrl(rootUrl, serviceName));
             var request = new RestRequest(Method.POST);
             request.AddHeader("devless-token", tokenValue);
@@ -87,13 +69,15 @@ namespace DvSharpSdk
             //executing the request
             IRestResponse response = client.Execute(request);
             var output = response.Content;
-            Console.WriteLine(output);
+            int statusCode = DevlessBuilder.checkStatusCode(output);
+            //Console.WriteLine(statusCode);
 
-            // var asynHandler = client.ExecuteAsync(request, response => { Console.WriteLine(response); });
+            return statusCode;
+
 
         }
 
-        public void edit(String serviceName, String tableName, IDictionary<String, Object> update, String id)
+        public int edit(String serviceName, String tableName, IDictionary<String, Object> update, String id)
         {
             var client = new RestClient(new DevlessBuilder().postUrl(rootUrl, serviceName));
             var request = new RestRequest(Method.PATCH);
@@ -102,10 +86,13 @@ namespace DvSharpSdk
             request.AddJsonBody(datatosend);
             IRestResponse response = client.Execute(request);
             var output = response.Content;
-            Console.WriteLine(output);
+            int statusCode = DevlessBuilder.checkStatusCode(output);
+            return statusCode;
+
+
         }
 
-        public void delete(String serviceName, String tableName, String id)
+        public int delete(String serviceName, String tableName, String id)
         {
             var client = new RestClient(new DevlessBuilder().postUrl(rootUrl, serviceName));
             var request = new RestRequest(Method.DELETE);
@@ -114,7 +101,9 @@ namespace DvSharpSdk
             request.AddJsonBody(datatosend);
             IRestResponse response = client.Execute(request);
             var output = response.Content;
-            Console.WriteLine(output);
+            int statusCode = DevlessBuilder.checkStatusCode(output);
+            return statusCode;
+
 
         }
 
@@ -134,3 +123,4 @@ namespace DvSharpSdk
         }
     }
 }
+
