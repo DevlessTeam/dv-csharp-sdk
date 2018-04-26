@@ -11,4 +11,7 @@ Before you start, you need to install the DV-CSHARP-SDK NuGet packages in to the
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
+-   [Authenticate and authorize users with Twitter and Facebook](https://github.com/Microsoft/XamarinAzure_ShoppingDemoApp/wiki/Authentication-Authorization)
+
+
 
